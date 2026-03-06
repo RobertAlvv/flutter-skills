@@ -1,10 +1,6 @@
-Use this skill for any Flutter development task involving scalable architecture, feature scaffolding,
-state management with flutter_bloc, navigation with auto_router, dependency injection with get_it +
-injectable, Firebase integration, or environment management with flutter_dotenv. Trigger for requests
-like "build a Flutter screen", "set up BLoC", "translate Stitch designs to Flutter code", "configure
-Firebase in Flutter", "create a feature", "scaffold a Flutter project", "Flutter clean architecture",
-or "optimize Flutter performance". Also activate when the user mentions llevar pantallas a Flutter,
-generar código Flutter, arquitectura limpia Flutter, or any BLoC/Cubit/auto_route/injectable question.
+---
+name: flutter-scalable-app
+description: Senior Flutter engineer skill for building production-grade apps with clean architecture, flutter_bloc state management, auto_route navigation, get_it + injectable dependency injection, and Firebase integration. Use for requests like "build a Flutter screen", "set up BLoC", "translate Stitch designs to Flutter code", "configure Firebase", "scaffold a Flutter project", "Flutter clean architecture", or "optimize Flutter performance".
 ---
 
 # Flutter Scalable App
