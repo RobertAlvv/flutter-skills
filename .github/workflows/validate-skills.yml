@@ -7,24 +7,69 @@ on:
     branches: [ main ]
 
 jobs:
-  validate-stitch-to-react:
+  validate-flutter-scalable-app:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: skills/react-components
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18.x'
-        cache: 'npm'
-        cache-dependency-path: skills/react-components/package-lock.json
+    - name: Check required skill files exist
+      run: |
+        files=(
+          "skills/flutter-scalable-app/SKILL.md"
+          "skills/flutter-scalable-app/references/architecture.md"
+          "skills/flutter-scalable-app/references/bloc-patterns.md"
+          "skills/flutter-scalable-app/references/dependency-injection.md"
+          "skills/flutter-scalable-app/references/firebase.md"
+          "skills/flutter-scalable-app/references/navigation.md"
+          "skills/flutter-scalable-app/references/performance.md"
+          "skills/flutter-scalable-app/references/stitch-to-flutter.md"
+        )
+        for f in "${files[@]}"; do
+          if [ ! -f "$f" ]; then
+            echo "❌ Missing required file: $f"
+            exit 1
+          fi
+          echo "✅ Found: $f"
+        done
 
-    - name: Install dependencies
-      run: npm ci
+    - name: Validate SKILL.md required sections
+      run: |
+        skill_file="skills/flutter-scalable-app/SKILL.md"
+        required_sections=(
+          "## Role Definition"
+          "## When to Use This Skill"
+          "## Core Workflow"
+          "## Reference Guide"
+          "## Constraints"
+          "## Output Templates"
+          "## Knowledge Reference"
+        )
+        for section in "${required_sections[@]}"; do
+          if ! grep -qF "$section" "$skill_file"; then
+            echo "❌ Missing required section: '$section' in $skill_file"
+            exit 1
+          fi
+          echo "✅ Section found: $section"
+        done
 
-    - name: Verify Gold Standard Example
-      run: node scripts/validate.js examples/gold-standard-card.tsx
+    - name: Validate reference files have sufficient content
+      run: |
+        min_lines=50
+        files=(
+          "skills/flutter-scalable-app/references/architecture.md"
+          "skills/flutter-scalable-app/references/bloc-patterns.md"
+          "skills/flutter-scalable-app/references/dependency-injection.md"
+          "skills/flutter-scalable-app/references/firebase.md"
+          "skills/flutter-scalable-app/references/navigation.md"
+          "skills/flutter-scalable-app/references/performance.md"
+          "skills/flutter-scalable-app/references/stitch-to-flutter.md"
+        )
+        for f in "${files[@]}"; do
+          count=$(wc -l < "$f")
+          if [ "$count" -lt "$min_lines" ]; then
+            echo "❌ $f has only $count lines (minimum: $min_lines)"
+            exit 1
+          fi
+          echo "✅ $f — $count lines"
+        done
