@@ -11,202 +11,237 @@ AI skills focused on Flutter development — prompts, workflows, and tools desig
 - [Repository Structure](#repository-structure)
 - [Resources](#resources)
 
+---
+
 ## Overview
 
-This repository contains a collection of AI-powered Flutter development skills. Each skill is a comprehensive guide that combines architectural patterns, best practices, code examples, and configuration recommendations to help AI agents (and developers) build production-grade Flutter applications.
+This repository contains two categories of AI-powered Flutter skills:
 
-The **`flutter-scalable-app`** skill is a complete senior-level engineer's guide to building scalable Flutter applications using clean architecture, advanced state management, and industry best practices.
+**Builder skills** — guide an AI agent to implement production-grade Flutter code from scratch, following clean architecture, advanced state management, and industry best practices.
+
+**Auditor skills** — guide an AI agent to perform structured, evidence-based analysis of an existing Flutter codebase, producing a prioritized report with findings and recommendations. Each auditor skill has a focused scope and does not overlap with the others.
+
+---
 
 ## Available Skills
 
-### 🎯 Flutter Scalable App
+### 🏗️ Flutter Scalable App
 
-A comprehensive skill for building enterprise-grade Flutter applications with production-ready architecture.
+A senior-level implementation skill for building enterprise-grade Flutter applications.
 
-**Use this skill for:**
-- Building new Flutter projects from scratch
-- Implementing features using clean architecture (domain/data/presentation layers)
-- Setting up complex state management with BLoC and Cubit
-- Configuring Firebase authentication and real-time databases
-- Optimizing app performance and user experience
-- Integrating UI designs (Stitch/Figma) into Flutter code
-- Setting up dependency injection with get_it + injectable
+**Use for:** building new screens or features, setting up architecture from scratch, implementing state management with BLoC/Cubit, configuring Firebase, integrating Stitch/Figma designs into Flutter code.
 
-**Includes:**
-- Complete architectural patterns and folder structure
-- State management patterns (BLoC vs Cubit decision matrix)
-- Dependency injection setup and configuration
-- Firebase integration (Auth, Firestore CRUD, Storage, Cloud Functions)
-- Navigation with auto_route (routing, guards, deep linking, tab navigation)
-- Performance optimization techniques and DevTools profiling
-- Translation guide: from Stitch designs to Flutter implementation
+**References:** [architecture](flutter-scalable-app/references/architecture.md) · [bloc-patterns](flutter-scalable-app/references/bloc-patterns.md) · [dependency-injection](flutter-scalable-app/references/dependency-injection.md) · [firebase](flutter-scalable-app/references/firebase.md) · [navigation](flutter-scalable-app/references/navigation.md) · [performance](flutter-scalable-app/references/performance.md) · [stitch-to-flutter](flutter-scalable-app/references/stitch-to-flutter.md)
+
+---
+
+### 🔍 Architecture Auditor
+
+Audits the overall architectural quality of a Flutter project.
+
+**Use for:** evaluating layer separation, feature modularization, dependency boundaries, state management strategy, and long-term scalability. Produces an Architecture Score (1–10) with a maturity level and prioritized recommendations.
+
+**Does not cover:** runtime performance, widget rebuild cost, state management internals, design system compliance, testability.
+
+**References:** [architecture](architecture-auditor/references/architecture.md) · [bloc-patterns](architecture-auditor/references/bloc-patterns.md) · [dependency-injection](architecture-auditor/references/dependency-injection.md) · [navigation](architecture-auditor/references/navigation.md)
+
+---
+
+### ⚡ Widget Performance Analyzer
+
+Audits widget rebuild behavior, render tree efficiency, layout costs, and scroll performance.
+
+**Use for:** detecting unnecessary rebuilds, expensive `build()` methods, inefficient list implementations, `saveLayer` misuse, InheritedWidget propagation issues, Sliver performance problems, and GC allocation pressure.
+
+**Does not cover:** isolate usage, async efficiency, architecture quality, design system compliance.
+
+**References:** [rebuild-patterns](widget-performance-analyzer/references/rebuild-patterns.md) · [savelayer-and-compositing](widget-performance-analyzer/references/savelayer-and-compositing.md) · [scroll-performance](widget-performance-analyzer/references/scroll-performance.md) · [layout-cost](widget-performance-analyzer/references/layout-cost.md)
+
+---
+
+### 🗂️ State Management Auditor
+
+Audits state management architecture — how state is created, scoped, mutated, and consumed.
+
+**Use for:** detecting rebuild inefficiencies, inconsistent pattern usage across features, state scoping and lifecycle issues, BLoC/Cubit/Riverpod architectural coupling, unification strategy when multiple solutions are mixed.
+
+**Does not cover:** widget rendering performance, architecture layer separation, DI quality, testability.
+
+**References:** [state-patterns](state-management-auditor/references/state-patterns.md) · [scoping-and-lifecycle](state-management-auditor/references/scoping-and-lifecycle.md) · [rebuild-efficiency](state-management-auditor/references/rebuild-efficiency.md) · [isolation-and-coupling](state-management-auditor/references/isolation-and-coupling.md)
+
+---
+
+### 🚀 Runtime Performance Auditor
+
+Audits Dart runtime performance — isolate usage, async efficiency, memoization, caching, and event loop health.
+
+**Use for:** detecting main-thread blocking work, sequential async calls that should be parallel, missing memoization in expensive computations, cache absence for repeated I/O, `scheduleMicrotask` misuse, and `Timer.periodic` event loop saturation.
+
+**Does not cover:** widget rebuild costs, frame budget, architecture quality, state management.
+
+**References:** [isolate-patterns](runtime-performance-auditor/references/isolate-patterns.md) · [async-efficiency](runtime-performance-auditor/references/async-efficiency.md) · [memoization-and-caching](runtime-performance-auditor/references/memoization-and-caching.md) · [event-loop-health](runtime-performance-auditor/references/event-loop-health.md)
+
+---
+
+### 🎨 Atomic Design System Auditor
+
+Audits whether the Flutter UI follows Atomic Design principles and maintains a healthy design system.
+
+**Use for:** detecting missing atomic hierarchy (atoms/molecules/organisms/templates/pages), import direction violations, duplicated UI primitives, raw hardcoded values instead of design tokens, oversized organisms, and design system scalability gaps.
+
+**Does not cover:** runtime performance, architecture quality, state management, testability.
+
+**References:** [atomic-hierarchy](atomic-design-system-auditor/references/atomic-hierarchy.md) · [token-usage](atomic-design-system-auditor/references/token-usage.md) · [component-composition](atomic-design-system-auditor/references/component-composition.md) · [duplication-detection](atomic-design-system-auditor/references/duplication-detection.md)
+
+---
+
+### 🧪 Testability Architecture Auditor
+
+Audits whether the architecture enables scalable, reliable testing across all test types.
+
+**Use for:** detecting architectural barriers to unit tests, bloc tests, widget tests, golden tests, and integration tests — DI coupling, hidden dependencies, business logic in widgets, `BuildContext` in Blocs, non-deterministic widget rendering, missing repository abstractions.
+
+**Does not cover:** runtime performance, widget rebuild cost, design system quality, architecture layer quality (those belong to other auditors).
+
+**References:** [unit-test-architecture](testability-architecture-auditor/references/unit-test-architecture.md) · [bloc-test-patterns](testability-architecture-auditor/references/bloc-test-patterns.md) · [widget-test-patterns](testability-architecture-auditor/references/widget-test-patterns.md) · [golden-test-prerequisites](testability-architecture-auditor/references/golden-test-prerequisites.md)
 
 ---
 
 ## Quick Reference
 
-### Reference Guides
+### Skill Selection Guide
 
-| Reference | Topic | Best For |
-|-----------|-------|----------|
-| [Architecture](skills/flutter-scalable-app/references/architecture.md) | Project structure, layers, folder organization | Understanding the clean architecture setup |
-| [BLoC Patterns](skills/flutter-scalable-app/references/bloc-patterns.md) | State management, BLoC vs Cubit, events, states | Implementing state management |
-| [Dependency Injection](skills/flutter-scalable-app/references/dependency-injection.md) | get_it, @injectable, modules, scopes | Setting up DI in your project |
-| [Firebase Integration](skills/flutter-scalable-app/references/firebase.md) | Auth, Firestore, Storage, Cloud Functions | Implementing backend services |
-| [Navigation](skills/flutter-scalable-app/references/navigation.md) | auto_route setup, routing guards, deep linking | Configuring app navigation |
-| [Performance Optimization](skills/flutter-scalable-app/references/performance.md) | const widgets, BlocSelector, ListViews, profiling | Optimizing app performance |
-| [Stitch to Flutter](skills/flutter-scalable-app/references/stitch-to-flutter.md) | Design tokens, routes, layouts, widgets | Translating designs into code |
+| Question | Skill to use |
+|---|---|
+| "Build a screen / feature / integration" | `flutter-scalable-app` |
+| "Is our architecture scalable?" | `architecture-auditor` |
+| "Why is the UI janky / rebuilding too much?" | `widget-performance-analyzer` |
+| "Is our BLoC/Riverpod usage correct?" | `state-management-auditor` |
+| "Why is our app slow on heavy data operations?" | `runtime-performance-auditor` |
+| "Is our design system consistent?" | `atomic-design-system-auditor` |
+| "Can we write unit / widget / golden tests?" | `testability-architecture-auditor` |
 
-### Key Versions Specified
+### Auditor Scope Matrix
 
-- **Flutter:** 3.27+ with Dart 3.6+
-- **State Management:** `flutter_bloc: ^9.1.0`, `cubit: ^9.1.0`
-- **Navigation:** `auto_route: ^10.2.2`
-- **DI:** `get_it: ^8.0.3`, `injectable: ^2.5.0`
-- **Code Generation:** `freezed: ^2.5.8`, `build_runner: ^2.4.0`
-- **Backend:** `firebase_core: ^3.13.0`, `cloud_firestore: ^5.4.0`
+| Concern | Architecture | Widget Perf | State Mgmt | Runtime Perf | Atomic Design | Testability |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| Layer separation | ✅ | | | | | |
+| Modularization | ✅ | | | | | |
+| Widget rebuild cost | | ✅ | | | | |
+| Scroll / layout performance | | ✅ | | | | |
+| BLoC/Cubit/Riverpod patterns | | | ✅ | | | |
+| State rebuild propagation | | | ✅ | | | |
+| Isolate / async efficiency | | | | ✅ | | |
+| Caching / memoization | | | | ✅ | | |
+| Atomic hierarchy | | | | | ✅ | |
+| Design token adoption | | | | | ✅ | |
+| DI / constructor injection | | | | | | ✅ |
+| Bloc test readiness | | | | | | ✅ |
+| Widget / golden test readiness | | | | | | ✅ |
 
 ---
 
 ## Usage Examples
 
-### Example 1: Build a Flutter Screen in Clean Architecture
-**Prompt:** "Build a user profile screen using clean architecture with BLoC state management. Include Firebase Firestore data loading and error handling."
+**Build a new feature:**
+> "Build a product listing screen using clean architecture with BLoC state management and Firebase Firestore. Include error handling and pagination."
+> → use `flutter-scalable-app`
 
-**What the skill provides:**
-- Domain layer: Use cases and repository abstractions
-- Data layer: Firebase implementation and models
-- Presentation layer: BLoC event/state definitions and UI
-- Dependency injection setup
+**Audit architecture:**
+> "Review the architecture of this Flutter app. Detect layer violations, inconsistent state management, and scalability risks."
+> → use `architecture-auditor`
 
-### Example 2: Set Up Firebase Authentication
-**Prompt:** "Set up Firebase authentication with sign-up, login, and logout using get_it for dependency injection. Include error handling and user session management."
+**Diagnose UI jank:**
+> "The product list screen drops frames during scroll. Analyze widget rebuild patterns and layout costs."
+> → use `widget-performance-analyzer`
 
-**What the skill provides:**
-- Firebase configuration steps
-- Authentication repository pattern
-- BLoC for auth state management
-- get_it module registration
-- Session persistence strategies
+**Audit state management:**
+> "We use BLoC in some features and Riverpod in others. Audit the state management architecture and recommend a unification strategy."
+> → use `state-management-auditor`
 
-### Example 3: Optimize a List View
-**Prompt:** "Optimize a large list of products. The list shows images, titles, and prices. Currently experiencing frame drops during scroll."
+**Diagnose slow data operations:**
+> "Our app freezes when processing large datasets. Audit isolate usage and async efficiency."
+> → use `runtime-performance-auditor`
 
-**What the skill provides:**
-- `ListView.builder` implementation (lazy loading)
-- `const` widget optimization
-- BlocSelector to rebuild only affected items
-- Image caching strategies
-- DevTools profiling guidance
+**Audit design system:**
+> "We have duplicate button and text components across features. Audit our atomic design compliance and token usage."
+> → use `atomic-design-system-auditor`
 
-### Example 4: Translate a Stitch Design to Flutter
-**Prompt:** "Convert this Stitch design into Flutter. Create the navigation structure, extract design tokens, and build reusable components."
-
-**What the skill provides:**
-- Design token extraction process
-- Route and navigation structure setup
-- Custom widget creation from design components
-- Responsive layout patterns
-- Theme integration
-
----
-
-## Technical Requirements
-
-### Minimum Environment
-- **Flutter:** 3.27 or higher
-- **Dart:** 3.6 or higher
-- **macOS/Linux/Windows** with Flutter SDK installed
-- **IDE:** VS Code, Android Studio, or IntelliJ
-
-### Required Packages (pubspec.yaml)
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  flutter_bloc: ^9.1.0
-  auto_route: ^10.2.2
-  get_it: ^8.0.3
-  freezed_annotation: ^2.4.0
-  firebase_core: ^3.13.0
-  cloud_firestore: ^5.4.0
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  build_runner: ^2.4.0
-  freezed: ^2.5.8
-  injectable_generator: ^2.5.0
-  auto_route_generator: ^10.2.0
-```
-
-### Knowledge Prerequisites
-- Basic Flutter and Dart understanding
-- Familiarity with state management concepts
-- Experience with async/await patterns
-- Understanding of Object-Oriented Programming
+**Audit testability:**
+> "We can't write unit tests for our Blocs and widget tests always need real repositories. Audit what's blocking us."
+> → use `testability-architecture-auditor`
 
 ---
 
 ## Repository Structure
 
 ```
-flutter-skills/
-├── README.md                           # This file
-├── skills/                             # Collection of AI skills
-│   └── flutter-scalable-app/
-│       ├── SKILL.md                    # Skill definition and metadata
-│       └── references/                 # Comprehensive reference guides
-│           ├── architecture.md         # Clean architecture patterns
-│           ├── bloc-patterns.md        # State management guide
-│           ├── dependency-injection.md # DI setup with get_it
-│           ├── firebase.md             # Firebase integration
-│           ├── navigation.md           # auto_route routing
-│           ├── performance.md          # Optimization techniques
-│           └── stitch-to-flutter.md    # Design-to-code workflow
-└── .github/
-    └── workflows/
-        └── validate-skills.yml         # CI/CD validation pipeline
+flutter/
+├── README.md
+├── flutter-scalable-app/
+│   ├── SKILL.md
+│   └── references/
+│       ├── architecture.md
+│       ├── bloc-patterns.md
+│       ├── dependency-injection.md
+│       ├── firebase.md
+│       ├── navigation.md
+│       ├── performance.md
+│       └── stitch-to-flutter.md
+├── architecture-auditor/
+│   ├── SKILL.md
+│   └── references/
+│       ├── architecture.md
+│       ├── bloc-patterns.md
+│       ├── dependency-injection.md
+│       └── navigation.md
+├── widget-performance-analyzer/
+│   ├── SKILL.md
+│   └── references/
+│       ├── rebuild-patterns.md
+│       ├── savelayer-and-compositing.md
+│       ├── scroll-performance.md
+│       └── layout-cost.md
+├── state-management-auditor/
+│   ├── SKILL.md
+│   └── references/
+│       ├── state-patterns.md
+│       ├── scoping-and-lifecycle.md
+│       ├── rebuild-efficiency.md
+│       └── isolation-and-coupling.md
+├── runtime-performance-auditor/
+│   ├── SKILL.md
+│   └── references/
+│       ├── isolate-patterns.md
+│       ├── async-efficiency.md
+│       ├── memoization-and-caching.md
+│       └── event-loop-health.md
+├── atomic-design-system-auditor/
+│   ├── SKILL.md
+│   └── references/
+│       ├── atomic-hierarchy.md
+│       ├── token-usage.md
+│       ├── component-composition.md
+│       └── duplication-detection.md
+└── testability-architecture-auditor/
+    ├── SKILL.md
+    └── references/
+        ├── unit-test-architecture.md
+        ├── bloc-test-patterns.md
+        ├── widget-test-patterns.md
+        └── golden-test-prerequisites.md
 ```
-
-### What Each Directory Contains
-
-- **`skills/`** — AI skill definitions with complete documentation
-- **`references/`** — Deep-dive guides on specific topics with code examples
-- **`.github/workflows/`** — CI/CD pipelines for validating skill completeness
 
 ---
 
 ## Resources
 
-### Official Documentation
 - [Flutter Documentation](https://flutter.dev/docs)
-- [BLoC Library Docs](https://bloclibrary.dev/)
-- [GetIt Package](https://pub.dev/packages/get_it)
-- [auto_route Package](https://pub.dev/packages/auto_route)
-- [Firebase Flutter Docs](https://firebase.flutter.dev/)
-- [Freezed Code Generation](https://pub.dev/packages/freezed)
-
-### Learning Resources
-- [Flutter Clean Architecture](https://resocoder.com/clean-architecture-tdd)
-- [BLoC Pattern Explanation](https://www.youtube.com/playlist?list=PLAXnLdK94zTxZ7tMwkWWGV6iRFxdQGiqG)
-- [Firebase Best Practices](https://firebase.google.com/docs/firestore/best-practices)
-- [Flutter Performance Tips](https://flutter.dev/perf)
-
----
-
-## Contributing
-
-When adding new skills or references:
-1. Follow the existing structure and naming conventions
-2. Include comprehensive code examples (copy-paste ready)
-3. Document anti-patterns with ❌ vs ✅ comparisons
-4. Add a checklist for implementation validation
-5. Update this README with links to new resources
-
----
-
-## License
-
-These AI skills are provided as-is for development and learning purposes. Always refer to official Flutter and package documentation for the latest best practices.
+- [BLoC Library](https://bloclibrary.dev/)
+- [Riverpod](https://riverpod.dev/)
+- [GetIt](https://pub.dev/packages/get_it) / [Injectable](https://pub.dev/packages/injectable)
+- [auto_route](https://pub.dev/packages/auto_route)
+- [Freezed](https://pub.dev/packages/freezed)
+- [Firebase Flutter](https://firebase.flutter.dev/)
+- [Flutter Performance](https://flutter.dev/perf)
+- [Flutter Test](https://docs.flutter.dev/testing)
