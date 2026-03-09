@@ -1,6 +1,6 @@
 # flutter-skills
 
-AI skills focused on Flutter development — prompts, workflows, and tools designed to help AI agents build, refactor, and maintain Flutter applications efficiently.
+AI skills focused on Flutter development — prompts, workflows, and tools designed to help AI agents build, audit, refactor, and maintain Flutter applications efficiently.
 
 ## Table of Contents
 
@@ -8,7 +8,6 @@ AI skills focused on Flutter development — prompts, workflows, and tools desig
 - [Available Skills](#available-skills)
 - [Quick Reference](#quick-reference)
 - [Usage Examples](#usage-examples)
-- [Technical Requirements](#technical-requirements)
 - [Repository Structure](#repository-structure)
 - [Resources](#resources)
 
