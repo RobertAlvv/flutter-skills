@@ -107,6 +107,18 @@ Audits whether the architecture enables scalable, reliable testing across all te
 
 ---
 
+### 🔧 CI/CD Architecture Auditor
+
+Audits Flutter CI/CD pipelines on GitHub Actions — structure, caching, test sharding, platform build signing, release automation, and monorepo pipeline design.
+
+**Use for:** diagnosing slow pipelines, detecting redundant toolchain invocations, configuring test sharding, wiring Android/iOS/Web build signing, gating release automation on quality jobs, evaluating monorepo multi-package pipeline strategies.
+
+**Does not cover:** Flutter application code quality, test coverage targets, Dart lint rule configuration, self-hosted runner infrastructure.
+
+**References:** [diagnosis](cicd-architecture-auditor/references/diagnosis.md) · [testing](cicd-architecture-auditor/references/testing.md) · [builds](cicd-architecture-auditor/references/builds.md) · [quality](cicd-architecture-auditor/references/quality.md) · [release](cicd-architecture-auditor/references/release.md) · [gh-actions](cicd-architecture-auditor/references/gh-actions.md)
+
+---
+
 ## Quick Reference
 
 ### Skill Selection Guide
@@ -120,24 +132,29 @@ Audits whether the architecture enables scalable, reliable testing across all te
 | "Why is our app slow on heavy data operations?" | `runtime-performance-auditor` |
 | "Is our design system consistent?" | `atomic-design-system-auditor` |
 | "Can we write unit / widget / golden tests?" | `testability-architecture-auditor` |
+| "Why is our pipeline slow / failing?" | `cicd-architecture-auditor` |
 
 ### Auditor Scope Matrix
 
-| Concern | Architecture | Widget Perf | State Mgmt | Runtime Perf | Atomic Design | Testability |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Layer separation | ✅ | | | | | |
-| Modularization | ✅ | | | | | |
-| Widget rebuild cost | | ✅ | | | | |
-| Scroll / layout performance | | ✅ | | | | |
-| BLoC/Cubit/Riverpod patterns | | | ✅ | | | |
-| State rebuild propagation | | | ✅ | | | |
-| Isolate / async efficiency | | | | ✅ | | |
-| Caching / memoization | | | | ✅ | | |
-| Atomic hierarchy | | | | | ✅ | |
-| Design token adoption | | | | | ✅ | |
-| DI / constructor injection | | | | | | ✅ |
-| Bloc test readiness | | | | | | ✅ |
-| Widget / golden test readiness | | | | | | ✅ |
+| Concern | Architecture | Widget Perf | State Mgmt | Runtime Perf | Atomic Design | Testability | CI/CD |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Layer separation | ✅ | | | | | | |
+| Modularization | ✅ | | | | | | |
+| Widget rebuild cost | | ✅ | | | | | |
+| Scroll / layout performance | | ✅ | | | | | |
+| BLoC/Cubit/Riverpod patterns | | | ✅ | | | | |
+| State rebuild propagation | | | ✅ | | | | |
+| Isolate / async efficiency | | | | ✅ | | | |
+| Caching / memoization | | | | ✅ | | | |
+| Atomic hierarchy | | | | | ✅ | | |
+| Design token adoption | | | | | ✅ | | |
+| DI / constructor injection | | | | | | ✅ | |
+| Bloc test readiness | | | | | | ✅ | |
+| Widget / golden test readiness | | | | | | ✅ | |
+| Pipeline job topology | | | | | | | ✅ |
+| Test sharding / caching | | | | | | | ✅ |
+| Platform build signing | | | | | | | ✅ |
+| Release automation | | | | | | | ✅ |
 
 ---
 
@@ -170,6 +187,10 @@ Audits whether the architecture enables scalable, reliable testing across all te
 **Audit testability:**
 > "We can't write unit tests for our Blocs and widget tests always need real repositories. Audit what's blocking us."
 > → use `testability-architecture-auditor`
+
+**Audit CI/CD pipeline:**
+> "Our pipeline takes 40 minutes and fails intermittently. Audit the job topology, caching, and test sharding configuration."
+> → use `cicd-architecture-auditor`
 
 ---
 
@@ -223,13 +244,22 @@ flutter/
 │       ├── token-usage.md
 │       ├── component-composition.md
 │       └── duplication-detection.md
-└── testability-architecture-auditor/
+├── testability-architecture-auditor/
+│   ├── SKILL.md
+│   └── references/
+│       ├── unit-test-architecture.md
+│       ├── bloc-test-patterns.md
+│       ├── widget-test-patterns.md
+│       └── golden-test-prerequisites.md
+└── cicd-architecture-auditor/
     ├── SKILL.md
     └── references/
-        ├── unit-test-architecture.md
-        ├── bloc-test-patterns.md
-        ├── widget-test-patterns.md
-        └── golden-test-prerequisites.md
+        ├── diagnosis.md
+        ├── testing.md
+        ├── builds.md
+        ├── quality.md
+        ├── release.md
+        └── gh-actions.md
 ```
 
 ---
